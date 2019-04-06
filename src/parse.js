@@ -6,7 +6,7 @@ export default s => {
   let maxBeat = 0;
   let beatNotes = [];
 
-  const notePattern = /(?<pause>P)(?<pauseDuration>\d+)|(?<hand>[RLx])(?<position>\d{2,4})?(?:(?<type>[hc])(?<duration>\d+))?/g;
+  const notePattern = /(?<pause>P)(?<pauseDuration>\d+)|(?<hand>[RLx_])(?<position>\d{2,4})?(?:(?<type>[hc])(?<duration>\d+))?/g;
   let match;
 
   while ((match = notePattern.exec(s))) {
@@ -24,8 +24,8 @@ export default s => {
       maxBeat = Math.max(maxBeat, currentBeat + duration);
       currentBeat = maxBeat;
       beatNotes = [];
-    } else if (match.groups.hand === "x") {
-      beatNotes.push(match.groups.hand);
+    } else if (!["L", "R"].includes(match.groups.hand)) {
+      beatNotes.push(null);
     } else {
       const { hand, type = "n", position } = match.groups;
       const duration = parseInt(match.groups.duration || "1");

@@ -27,6 +27,19 @@
       <input v-model="patternInput" type="textarea" />
       <button @click="copyToClipboard">Copy</button>
     </div>
+    <div class="explanation">
+      <strong>note spec: hand[position][type+duration]</strong>
+      <em>where (with anything inside [] being optional)</em>
+      <div>hand = L, R, or _ (no note in that timeslot)</div>
+      <div>position = 2 digits signifying row and column between 0 and 9, random position if omitted</div>
+      <div>type = h (hold) or c (chain, not supported yet), standard note if omitted</div>
+      <div>duration = number of beats the note should stay</div>
+    </div>
+    <div class="examples">
+      <button @click="patternInput = 'xR Lx xx LR'">Example 1 (basics)</button>
+      <button @click="patternInput = 'L26R22 L36R32 R83x R86x'">Example 2 (positions)</button>
+      <button @click="patternInput = 'xRh5 Lx Lx Lh2x'">Example 3 (holds)</button>
+    </div>
   </div>
 </template>
 
@@ -118,5 +131,25 @@ export default {
   margin: 1em;
   padding: 0 0.5em;
   border: 1px solid lightgray;
+}
+.explanation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 2em;
+  color: gray;
+
+  em {
+    margin: 0.5em 0;
+  }
+}
+.examples {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+
+  button {
+    margin: 0.25em;
+  }
 }
 </style>
