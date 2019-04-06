@@ -1,6 +1,10 @@
+import seedrandom from "seedrandom"
+
 let idCounter = 0;
 
 export default s => {
+  const rng = seedrandom(s.replace(" ", ""));
+
   const notes = [];
   let currentBeat = 0;
   let maxBeat = 0;
@@ -47,8 +51,8 @@ export default s => {
               -0.75 + (1.5 * parseInt(position[1])) / 9
             ]
           : [
-              (hand === "L" ? -1 : 1) * (0.5 + 0.25 * Math.random()),
-              -0.75 + 1.5 * Math.random()
+              (hand === "L" ? -1 : 1) * (0.5 + 0.25 * rng()),
+              -0.75 + 1.5 * rng()
             ]
       };
 
