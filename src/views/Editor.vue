@@ -6,13 +6,6 @@
           <Note v-for="note in currentNotes" :key="note.id" v-bind="note" />
         </transition-group>
       </svg>
-      <input
-        v-model.number="currentBeat"
-        type="range"
-        min="0"
-        :max="parsedPattern.length - 1"
-      />
-      <button @click="copyToClipboard">Copy</button>
       <!-- <code>
         <pre>{{ JSON.stringify(parsedPattern) }}</pre>
       </code>
@@ -20,8 +13,19 @@
         <pre>{{ JSON.stringify(currentNotes) }}</pre>
       </code> -->
     </div>
+    <div class="play-controls">
+      <button @click="autoplay = !autoplay">{{ autoplay ? 'Pause' : 'Play' }}</button>
+      <input
+        v-model.number="currentBeat"
+        type="range"
+        min="0"
+        disabled
+        :max="parsedPattern.length - 1"
+      />
+    </div>
     <div class="pattern-input">
       <input v-model="patternInput" type="textarea" />
+      <button @click="copyToClipboard">Copy</button>
     </div>
   </div>
 </template>
@@ -43,6 +47,7 @@ export default {
   data() {
     return {
       patternInput: decodeURIComponent(this.pattern),
+      autoplay: true,
       currentBeat: 0
     };
   },
@@ -62,12 +67,19 @@ export default {
   watch: {
     parsedPattern() {
       this.currentBeat = 0;
+    },
+    autoplay: {
+      immediate: true,
+      handler(value) {
+        if (value) {
+          this.interval = setInterval(() => {
+            this.currentBeat = (this.currentBeat + 1) % this.parsedPattern.length;
+          }, 500);
+        } else {
+          clearInterval(this.interval);
+        }
+      }
     }
-  },
-  created() {
-    this.interval = setInterval(() => {
-      this.currentBeat = (this.currentBeat + 1) % this.parsedPattern.length;
-    }, 500);
   },
   beforeDestroy() {
     clearInterval(this.interval);
@@ -89,9 +101,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.editor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .preview {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid lightgray;
+}
+.play-controls {
+  display: flex;
+  align-items: center;
+  margin: 1em;
+  padding: 0 0.5em;
+  border: 1px solid lightgray;
 }
 </style>
