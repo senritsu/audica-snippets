@@ -6,7 +6,7 @@
     </header>
     <router-view />
     <footer>
-      Copyright © 2019 senritsu | AUDICA, HARMONIX, AND ALL RELATED TITLES AND
+      Copyright © 2019 senritsu | source on <a href="https://github.com/senritsu/audica-snippets">GitHub</a> | AUDICA, HARMONIX, AND ALL RELATED TITLES AND
       LOGOS ARE TRADEMARKS OF HARMONIX MUSIC SYSTEMS, INC.
     </footer>
   </div>
@@ -50,6 +50,10 @@ body {
     background-color: rgb(51, 55, 61);
     font-weight: 400;
     color: gray;
+
+    a {
+      color: whitesmoke;
+    }
   }
 }
 #nav {
