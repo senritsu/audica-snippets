@@ -1,12 +1,12 @@
 <template lang="html">
   <div class="chart">
-    <svg class="beat prelude" :class="{ highlight: currentBeat === -2 }"></svg>
-    <svg class="beat prelude" :class="{ highlight: currentBeat === -1 }"></svg>
+    <svg class="beat prelude" :class="{ highlight: currentBeat === 0 }"></svg>
+    <svg class="beat prelude" :class="{ highlight: currentBeat === 1 }"></svg>
     <svg
       v-for="(beat, i) in beats"
       :key="i"
       class="beat"
-      :class="{ highlight: currentBeat === i }"
+      :class="{ highlight: currentBeat === i + 2 }"
       viewBox="-1 -1 2 2"
     >
       <text x="0" y="0" dy="0.1">{{ i + 1 }}</text>
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { diamond } from "@/geometry";
+
 export default {
   props: {
     beats: {
@@ -43,12 +45,7 @@ export default {
     }
   },
   methods: {
-    diamond(center, radius) {
-      const [cx, cy] = center;
-      const r = radius;
-      return `M ${cx} ${cy + r} L ${cx + r} ${cy} L ${cx} ${cy - r} L ${cx -
-        r} ${cy} Z`;
-    }
+    diamond
   }
 };
 </script>
