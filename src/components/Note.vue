@@ -87,11 +87,11 @@ export default {
     opacity: 0.1;
   }
   99% {
-    opacity: 0.75;
+    opacity: 0.5;
     transform: scale(1);
   }
   100% {
-    stroke-width: 0.05;
+    stroke-width: 0.03;
     opacity: 0;
   }
 }
