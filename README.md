@@ -1,4 +1,8 @@
-# audica-bin
+# audica-snippets
+
+A simple web application to edit and share audica chart snippets.
+
+Live at: <https://audica-snippets.senritsu.dev>
 
 ## Project setup
 ```
