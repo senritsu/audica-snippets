@@ -9,10 +9,18 @@
     viewBox="-1 -1 2 2"
   >
     <circle v-if="type === 'n'" class="hit" cx="0" cy="0" r="0.2"></circle>
-    <path v-if="type === 'h'" class="hit" d="M 0 0.2 L 0.2 0 L 0 -0.2 L -0.2 0 Z"></path>
+    <path
+      v-if="type === 'h'"
+      class="hit"
+      d="M 0 0.2 L 0.2 0 L 0 -0.2 L -0.2 0 Z"
+    ></path>
 
     <circle v-if="type === 'n'" class="timer" cx="0" cy="0" r="0.2"></circle>
-    <path v-if="type === 'h'" class="timer" d="M 0 0.2 L 0.2 0 L 0 -0.2 L -0.2 0 Z"></path>
+    <path
+      v-if="type === 'h'"
+      class="timer"
+      d="M 0 0.2 L 0.2 0 L 0 -0.2 L -0.2 0 Z"
+    ></path>
   </svg>
 </template>
 
@@ -46,7 +54,8 @@ export default {
   animation: 0.5s timer forwards;
 }
 
-.n .hit, .h .hit {
+.n .hit,
+.h .hit {
   opacity: 0;
   stroke-width: 0.1;
   fill-opacity: 0.5;

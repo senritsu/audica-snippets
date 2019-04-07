@@ -8,17 +8,21 @@
       <strong class="token">position</strong>
       <strong class="optional">]</strong>
       <strong class="optional">[</strong>
-      <strong class="token">type</strong>+<strong class="token">duration</strong>
+      <strong class="token">type</strong>
+      +
+      <strong class="token">duration</strong>
       <strong class="optional">]</strong>
     </p>
     <div>
-      where (with anything inside <strong class="optional">[ ]</strong> being optional)
+      where (with anything inside <strong class="optional">[ ]</strong>
+      being optional)
     </div>
     <div>
       <strong class="token">hand</strong> =
       <strong class="token-content">L</strong>,
       <strong class="token-content">R</strong>, or
-      <strong class="token-content">x</strong> (placeholder, no note in that timeslot)
+      <strong class="token-content">x</strong>
+      (placeholder, no note in that timeslot)
     </div>
     <div>
       <strong class="token">position</strong> =

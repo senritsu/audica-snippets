@@ -1,15 +1,17 @@
 <template lang="html">
   <div class="examples">
-    <button @click="$emit('input','xR Lx xx LR')">Example 1 (basics)</button>
-    <button @click="$emit('input','L26R22 L36R32 R83x R86x')">Example 2 (positions)</button>
-    <button @click="$emit('input','xRh5 Lx Lx Lh2x')">Example 3 (holds)</button>
+    <button @click="$emit('input', 'xR Lx xx LR')">Example 1 (basics)</button>
+    <button @click="$emit('input', 'L26R22 L36R32 R83x R86x')">
+      Example 2 (positions)
+    </button>
+    <button @click="$emit('input', 'xRh5 Lx Lx Lh2x')">
+      Example 3 (holds)
+    </button>
   </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style lang="scss" scoped>

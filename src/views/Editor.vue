@@ -20,7 +20,10 @@
       <button
         v-if="!autoplay"
         class="back"
-        @click="currentBeat = (currentBeat - 1 + paddedBeats.length) % paddedBeats.length"
+        @click="
+          currentBeat =
+            (currentBeat - 1 + paddedBeats.length) % paddedBeats.length
+        "
       >
         ◀
       </button>
@@ -40,7 +43,7 @@
       <input v-model="patternInput" type="textarea" />
       <button @click="copyToClipboard">
         <span>Copy </span>
-        <span class="icon" :class="{copied}">📋</span>
+        <span class="icon" :class="{ copied }">📋</span>
       </button>
     </div>
 
@@ -186,7 +189,8 @@ export default {
     width: 100px;
   }
 
-  .forward, .back {
+  .forward,
+  .back {
     width: 30px;
     height: 30px;
   }

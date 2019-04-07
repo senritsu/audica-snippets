@@ -14,7 +14,7 @@
         <circle
           v-if="note.type === 'n'"
           :key="note.id"
-          :class="{[note.hand]: true}"
+          :class="{ [note.hand]: true }"
           :cx="note.position[0]"
           :cy="note.position[1]"
           r="0.2"
@@ -22,7 +22,7 @@
         <path
           v-if="note.type === 'h'"
           :key="note.id"
-          :class="{[note.hand]: true}"
+          :class="{ [note.hand]: true }"
           :d="diamond(note.position, 0.2)"
         ></path>
       </template>
@@ -68,7 +68,7 @@ export default {
   text {
     text-anchor: middle;
     alignment-baseline: middle;
-    font: bold 1px 'Roboto', sans-serif;
+    font: bold 1px "Roboto", sans-serif;
     fill: rgb(188, 188, 198);
   }
 

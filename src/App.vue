@@ -6,19 +6,20 @@
     </header>
     <router-view />
     <footer>
-      Copyright © 2019 senritsu | AUDICA, HARMONIX, AND ALL RELATED TITLES AND LOGOS ARE TRADEMARKS OF HARMONIX MUSIC SYSTEMS, INC.
+      Copyright © 2019 senritsu | AUDICA, HARMONIX, AND ALL RELATED TITLES AND
+      LOGOS ARE TRADEMARKS OF HARMONIX MUSIC SYSTEMS, INC.
     </footer>
   </div>
 </template>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,400');
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,400");
 
 body {
   margin: 0;
 }
 #app {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
