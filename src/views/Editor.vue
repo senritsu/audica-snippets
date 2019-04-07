@@ -7,49 +7,62 @@
         </transition-group>
       </svg>
       <!-- <code>
-        <pre>{{ JSON.stringify(parsedPattern) }}</pre>
+        <pre>{{ JSON.stringify(paddedBeats) }}</pre>
       </code>
       <code>
         <pre>{{ JSON.stringify(currentNotes) }}</pre>
       </code> -->
     </div>
+
+    <Chart :beats="beats" :current-beat="currentBeat - 2" />
+
     <div class="play-controls">
-      <button @click="autoplay = !autoplay">{{ autoplay ? 'Pause' : 'Play' }}</button>
-      <input
-        v-model.number="currentBeat"
-        type="range"
-        min="0"
-        disabled
-        :max="parsedPattern.length - 1"
-      />
+      <button
+        v-if="!autoplay"
+        class="back"
+        @click="currentBeat = (currentBeat - 1 + paddedBeats.length) % paddedBeats.length"
+      >
+        ◀
+      </button>
+      <button class="play" @click="autoplay = !autoplay">
+        {{ autoplay ? "Pause" : "Play" }}
+      </button>
+      <button
+        v-if="!autoplay"
+        class="forward"
+        @click="currentBeat = (currentBeat + 1) % paddedBeats.length"
+      >
+        ▶
+      </button>
     </div>
+
     <div class="pattern-input">
       <input v-model="patternInput" type="textarea" />
-      <button @click="copyToClipboard">Copy</button>
+      <button @click="copyToClipboard">
+        <span>Copy </span>
+        <span class="icon" :class="{copied}">📋</span>
+      </button>
     </div>
-    <div class="explanation">
-      <strong>note spec: hand[position][type+duration]</strong>
-      <em>where (with anything inside [] being optional)</em>
-      <div>hand = L, R, or _ (no note in that timeslot)</div>
-      <div>position = 2 digits signifying row and column between 0 and 9, random position if omitted</div>
-      <div>type = h (hold) or c (chain, not supported yet), standard note if omitted</div>
-      <div>duration = number of beats the note should stay</div>
-    </div>
-    <div class="examples">
-      <button @click="patternInput = 'xR Lx xx LR'">Example 1 (basics)</button>
-      <button @click="patternInput = 'L26R22 L36R32 R83x R86x'">Example 2 (positions)</button>
-      <button @click="patternInput = 'xRh5 Lx Lx Lh2x'">Example 3 (holds)</button>
-    </div>
+
+    <Explanation />
+
+    <Examples @input="patternInput = $event" />
   </div>
 </template>
 
 <script>
 import parse from "@/parse";
 import Note from "@/components/Note";
+import Chart from "@/components/Chart";
+import Explanation from "@/components/Explanation";
+import Examples from "@/components/Examples";
 
 export default {
   components: {
-    Note
+    Note,
+    Chart,
+    Explanation,
+    Examples
   },
   props: {
     pattern: {
@@ -61,24 +74,31 @@ export default {
     return {
       patternInput: decodeURIComponent(this.pattern),
       autoplay: true,
-      currentBeat: 0
+      currentBeat: 0,
+      copied: false
     };
   },
   computed: {
     currentNotes() {
-      return this.parsedPattern
+      return this.paddedBeats
         .slice(this.currentBeat, this.currentBeat + 2)
         .reduce((all, notes) => all.concat(notes), [])
         .filter(
           (x, i, array) => array.findIndex(other => x.id === other.id) === i
         );
     },
-    parsedPattern() {
-      return [[], [], ...parse(this.patternInput)];
+    beats() {
+      return parse(this.patternInput);
+    },
+    paddedBeats() {
+      return [[], []].concat(this.beats);
     }
   },
   watch: {
-    parsedPattern() {
+    patternInput() {
+      this.copied = false;
+    },
+    paddedBeats() {
       this.currentBeat = 0;
     },
     autoplay: {
@@ -86,7 +106,7 @@ export default {
       handler(value) {
         if (value) {
           this.interval = setInterval(() => {
-            this.currentBeat = (this.currentBeat + 1) % this.parsedPattern.length;
+            this.currentBeat = (this.currentBeat + 1) % this.paddedBeats.length;
           }, 500);
         } else {
           clearInterval(this.interval);
@@ -108,6 +128,8 @@ export default {
       el.select();
       document.execCommand("copy");
       document.body.removeChild(el);
+
+      this.copied = true;
     }
   }
 };
@@ -123,33 +145,80 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid lightgray;
+
+  background-color: rgb(81, 85, 93);
+  box-shadow: inset rgb(37, 37, 37) 1px 2px 5px 3px;
+  margin: 0.25em;
 }
 .play-controls {
   display: flex;
   align-items: center;
   margin: 1em;
-  padding: 0 0.5em;
-  border: 1px solid lightgray;
-}
-.explanation {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 2em;
-  color: gray;
-
-  em {
-    margin: 0.5em 0;
-  }
-}
-.examples {
-  display: flex;
-  flex-direction: column;
-  width: 200px;
 
   button {
-    margin: 0.25em;
+    height: 30px;
+    margin: 0 0.25em;
+    border-radius: 3px;
+    border: none;
+    font: 1.2em sans-serif;
+    font-weight: 100;
+    color: whitesmoke;
+    box-shadow: rgb(43, 43, 43) 1px 2px 3px 1px;
+    background-color: rgb(190, 82, 22);
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgb(230, 98, 25);
+    }
+  }
+
+  .play {
+    width: 100px;
+  }
+
+  .forward, .back {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.pattern-input {
+  input {
+    width: 600px;
+    padding: 0.4em;
+    font: 1.3em sans-serif;
+    color: rgb(58, 65, 75);
+    border: 1px solid rgb(38, 38, 38);
+    box-shadow: inset #444444 1px 1px 3px 0px;
+  }
+
+  button {
+    width: 100px;
+    text-align: left;
+    cursor: pointer;
+    margin-left: 0.25em;
+    padding: 0.4em;
+    font: 1.3em sans-serif;
+    color: whitesmoke;
+    background-color: rgb(11, 166, 252);
+    border: none;
+    box-shadow: rgb(43, 43, 43) 1px 2px 3px 1px;
+
+    transition: background-color 0.2s;
+
+    .icon {
+      font-size: 0.85em;
+
+      &:not(.copied) {
+        opacity: 0.25;
+      }
+    }
+
+    &:hover {
+      background-color: rgb(65, 187, 255);
+    }
   }
 }
 </style>
