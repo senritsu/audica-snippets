@@ -1,5 +1,7 @@
 <template lang="html">
   <div class="chart">
+    <svg class="beat prelude" :class="{ highlight: currentBeat === -2 }"></svg>
+    <svg class="beat prelude" :class="{ highlight: currentBeat === -1 }"></svg>
     <svg
       v-for="(beat, i) in beats"
       :key="i"
@@ -7,6 +9,7 @@
       :class="{ highlight: currentBeat === i }"
       viewBox="-1 -1 2 2"
     >
+      <text x="0" y="0" dy="0.1">{{ i + 1 }}</text>
       <template v-for="note in beat">
         <circle
           v-if="note.type === 'n'"
@@ -62,9 +65,24 @@ export default {
 
   box-shadow: rgb(43, 43, 43) 1px 1px 3px 1px;
 
+  text {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font: bold 1px 'Roboto', sans-serif;
+    fill: rgb(188, 188, 198);
+  }
+
+  &.prelude {
+    opacity: 0.25;
+  }
+
   &.highlight {
     transform: translate(-1px, -2px);
     box-shadow: rgb(43, 43, 43) 2px 3px 5px 2px;
+
+    text {
+      fill: rgb(164, 164, 219);
+    }
   }
 
   &:not(:first-child) {
