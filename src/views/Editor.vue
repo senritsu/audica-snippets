@@ -44,9 +44,11 @@
       </button>
     </div>
 
-    <Explanation />
+    <div class="help">
+      <Examples @input="patternInput = $event" />
 
-    <Examples @input="patternInput = $event" />
+      <Explanation />
+    </div>
   </div>
 </template>
 
@@ -220,5 +222,10 @@ export default {
       background-color: rgb(65, 187, 255);
     }
   }
+}
+
+.help {
+  display: flex;
+  align-items: center;
 }
 </style>
