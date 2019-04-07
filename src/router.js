@@ -11,7 +11,8 @@ export default new Router({
     {
       path: "/",
       name: "new",
-      component: Editor
+      component: Editor,
+      props: { pattern: "RxLx" }
     },
     {
       path: "/:pattern",

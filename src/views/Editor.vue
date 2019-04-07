@@ -97,8 +97,12 @@ export default {
     }
   },
   watch: {
-    patternInput() {
-      this.copied = false;
+    patternInput: {
+      immediate: true,
+      handler() {
+        this.copied = false;
+        this.$router.replace(`/${encodeURIComponent(this.patternInput)}`);
+      }
     },
     paddedBeats() {
       this.currentBeat = 0;
