@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="editor">
-    <div class="preview" :class={flash}>
+    <div class="preview" :class="{ flash }">
       <svg viewBox="-1 -1 2 2" width="400px" height="400px">
         <transition-group :duration="{ enter: 1000, leave: 0 }" tag="g">
           <Note v-for="note in currentNotes" :key="note.id" v-bind="note" />
