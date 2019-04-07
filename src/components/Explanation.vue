@@ -11,9 +11,9 @@
       <strong class="token">type</strong>+<strong class="token">duration</strong>
       <strong class="optional">]</strong>
     </p>
-    <p>
-      <em>where (with anything inside <strong class="optional">[ ]</strong> being optional)</em>
-    </p>
+    <div>
+      where (with anything inside <strong class="optional">[ ]</strong> being optional)
+    </div>
     <div>
       <strong class="token">hand</strong> =
       <strong class="token-content">L</strong>,
@@ -35,6 +35,9 @@
       <strong class="token">duration</strong> =
       <strong class="token-content">number</strong> of beats the note should
       stay
+    </div>
+    <div>
+      Spaces between notes are ignored and can be used for better readability
     </div>
   </div>
 </template>

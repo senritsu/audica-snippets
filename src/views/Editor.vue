@@ -142,7 +142,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
 }
+
 .preview {
   display: flex;
   flex-direction: column;
