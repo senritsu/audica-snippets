@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="editor">
-    <div class="preview">
+    <div class="preview" :class={flash}>
       <svg viewBox="-1 -1 2 2" width="400px" height="400px">
         <transition-group :duration="{ enter: 1000, leave: 0 }" tag="g">
           <Note v-for="note in currentNotes" :key="note.id" v-bind="note" />
@@ -80,7 +80,8 @@ export default {
       patternInput: decodeURIComponent(this.pattern),
       autoplay: true,
       currentBeat: 0,
-      copied: false
+      copied: false,
+      flash: false
     };
   },
   computed: {
@@ -109,6 +110,14 @@ export default {
     },
     paddedBeats() {
       this.currentBeat = 0;
+    },
+    currentBeat(currentBeat) {
+      this.flash = false;
+      if (currentBeat >= 2) {
+        this.$nextTick().then(() => {
+          this.flash = true;
+        });
+      }
     },
     autoplay: {
       immediate: true,
@@ -160,6 +169,10 @@ export default {
   background-color: rgb(81, 85, 93);
   box-shadow: inset rgb(37, 37, 37) 1px 2px 5px 3px;
   margin: 0.25em;
+
+  &.flash {
+    animation: 0.5s flash;
+  }
 }
 .play-controls {
   display: flex;
@@ -237,5 +250,20 @@ export default {
 .help {
   display: flex;
   align-items: center;
+}
+
+@keyframes flash {
+  0% {
+    box-shadow: inset #83799d 1px 2px 18px 15px;
+  }
+  10% {
+    box-shadow: inset #5f6175 1px 2px 12px 10px;
+  }
+  40% {
+    box-shadow: inset #3e3e3e 1px 2px 8px 5px;
+  }
+  100% {
+    box-shadow: inset #252525 1px 2px 5px 3px;
+  }
 }
 </style>
