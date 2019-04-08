@@ -43,7 +43,7 @@ export default {
   methods: {
     copyToClipboard() {
       const el = document.createElement("textarea");
-      el.value = `${location.origin}/${encodeURIComponent(this.patternInput)}`;
+      el.value = `${location.origin}/${encodeURIComponent(this.value)}`;
       el.setAttribute("readonly", "");
       el.style.position = "absolute";
       el.style.left = "-9999px";
