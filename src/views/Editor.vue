@@ -1,10 +1,10 @@
 <template lang="html">
   <div class="editor">
-    <BeatPreview :beats="beats" :current-beat="currentBeat" />
+    <BeatPreview :beats="beats" :current-beat="currentBeat" :bpm="bpm" />
 
     <Chart :beats="beats" :current-beat="currentBeat" />
 
-    <PlayControls v-model="currentBeat" :count="beats.length + 2" />
+    <PlayControls v-model="currentBeat" :count="beats.length + 2" :bpm.sync="bpm" />
 
     <PatternInput v-model="patternInput" />
 
@@ -44,7 +44,8 @@ export default {
   data() {
     return {
       patternInput: decodeURIComponent(this.pattern),
-      currentBeat: 0
+      currentBeat: 0,
+      bpm: 120
     };
   },
   computed: {

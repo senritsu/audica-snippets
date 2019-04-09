@@ -32,7 +32,7 @@ export default s => {
       beatNotes.push(null);
     } else {
       const { hand, type = "n", position } = match.groups;
-      const duration = parseInt(match.groups.duration || "1");
+      const duration = parseInt(match.groups.duration || "0");
 
       if (beatNotes.indexOf(hand) > -1) {
         currentBeat++;
@@ -44,7 +44,7 @@ export default s => {
         hand,
         type,
         start: currentBeat,
-        end: currentBeat + duration - 1,
+        end: currentBeat + duration,
         position: position
           ? [
               -0.75 + (1.5 * parseInt(position[0])) / 9,

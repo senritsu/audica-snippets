@@ -20,7 +20,7 @@
           r="0.2"
         ></circle>
         <path
-          v-if="note.type === 'h'"
+          v-if="note.type === 'h' && i < note.end"
           :key="note.id"
           :class="{ [note.hand]: true }"
           :d="diamond(note.position, 0.2)"
